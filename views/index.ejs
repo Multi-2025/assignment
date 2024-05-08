@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Homepage</title>
+  <!-- Link Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Link Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    /* Custom styles */
+    .content {
+      display: none; /* Hide content by default */
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+      <h1 class="animate__animated animate__fadeInDown">Welcome to Our Website</h1>
+      <p class="lead animate__animated animate__slideInLeft">We offer amazing services!</p>
+    </div>
+  </div>
+
+  <!-- Content with animations -->
+  <div class="row mt-5">
+    <div class="col-md-6 offset-md-3 text-center content">
+      <h2 class="animate__animated animate__fadeInLeft">Our Services</h2>
+      <p class="animate__animated animate__fadeInRight">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget justo magna. Phasellus suscipit vel velit eget dapibus.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Link jQuery and Anmine.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+  // When the document is ready
+  $(document).ready(function(){
+    // Fade in the content and slide from left animation
+    $(".content").fadeIn(1500);
+    anime({
+      targets: '.content',
+      translateX: [-100, 0],
+      opacity: [0, 1],
+      easing: 'easeOutQuad',
+      duration: 1500
+    });
+  });
+</script>
+</body>
+</html>
