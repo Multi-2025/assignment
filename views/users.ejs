@@ -1,42 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" >
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mypage</title>
-    <!-- 引入 Bootstrap CSS 文件 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="stylesheets/style.css">
+  <meta charset="UTF-8">
+  <title>CodePen - Personal Webpage/Portfolio</title>
+  <title>My personal Webpage.</title>
+  <meta name="description" content="Game Developer + Web Designer">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:100,200,400,600' rel='stylesheet' type='text/css'>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.4/jquery.fullPage.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+<link rel="stylesheet" href="stylesheets/user.css">
+<link rel="stylesheet" href="stylesheets/style.css">
 </head>
-
 <body>
-<header>
+<!-- partial:index.partial.html -->
+
+  <!-- navbar header -->
+  <header>
     <ul id="nav">
-        <li class="slide1"></li>
         <li class="slide2"></li>
         <li><a href="/">Alpha</a></li>
         <li class="active"><a href="/users">Beta</a></li>
         <li><a href="/form">Gamma</a></li>
     </ul>
 </header>
-<section class="">
-  <div class="container">
-    <div class="row">
-        <h1>Welcome to users</h1>
-      <div class="col-md-6">
-      </div>
-      <div class="col-md-6">
+  <!-- end navbar header -->
+
+  <!-- sidebar slider -->
+  <div class="nav-screen">
+    <i class="fa fa-times fa-3x"></i>
+    <div class="nav-container">
+      <div class="nav-links">
+        <ul id='myMenu'>
+          <li data-menuanchor="secondPage"><a href="#about">ABOUT</a></li>
+          <li data-menuanchor="thirdPage"><a href="#portfolio">PORTFOLIO</a></li>
+          <li data-menuanchor="fourthPage"><a href="#contact">CONTACT</a></li>
+        </ul>
       </div>
     </div>
   </div>
-</section>
+  <!-- end navbar slider -->
 
+  <!-- begin fullpage -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- 引入 Bootstrap JS 文件（可选） -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <div id="fullpage">
+
+    <!-- begin section -->
+
+    <div class="section aboutme" data-anchor="aboutme">
+      <div class="opaque-bg animated fadeInDown">
+        <h1 style="color:white">FRASHO<span style="color:#FF6363">/</span>FRADAR</h1>
+        <p><span id="holder"></span><span class="blinking-cursor">|</span></p>
+      </div>
+      <i id="moveDown" class="fa fa-chevron-down fa-3x bounce"></i>
+    </div>
+    <!-- end section -->
+
+    <!-- begin section -->
+
+    <div class="section" data-anchor="skills">
+      <div class="content">
+        <h1 class="wow fadeInDown" data-wow-delay="0.2s">ABOUT ME</h1>
+        <p class="wow fadeInDown" data-wow-delay="0.2s">Hi, I'm Frasho, aka FRADAR! I am a game developer and web designer. I like reading and writing blogs and stories, and I really love coding! I have made many games over the years, such as a racing game called TurboBoost and a geometry-dash inspired game. I'm a big fan of multiplayer games and I have even made 3 .io games! I have also made many chrome extensions and bookmarklets like dark mode,WebEdit and WikiSearch.</p>
+
+        <div class=" wow fadeInUp container-skillbar" data-wow-delay="0.2s">
+          <div class="skillbar clearfix " data-percent="90%">
+            <div class="skillbar-title" style="background: #DD1E2F;"><span>HTML5</span></div>
+            <div class="skillbar-bar" style="background: #DD1E2F;"></div>
+            <div class="skill-bar-percent">90%</div>
+          </div> <!-- End Skill Bar -->
+
+          <div class="skillbar clearfix " data-percent="80%">
+            <div class="skillbar-title" style="background: #EBB035;"><span>CSS3</span></div>
+            <div class="skillbar-bar" style="background: #EBB035;"></div>
+            <div class="skill-bar-percent">80%</div>
+          </div> <!-- End Skill Bar -->
+
+          <div class="skillbar clearfix " data-percent="75%">
+            <div class="skillbar-title" style="background: #218559;"><span>Javascript</span></div>
+            <div class="skillbar-bar" style="background: #218559;"></div>
+            <div class="skill-bar-percent">75%</div>
+          </div> <!-- End Skill Bar -->
+
+          <div class="skillbar clearfix " data-percent="45%">
+            <div class="skillbar-title" style="background: #6840D4;"><span>C#</span></div>
+            <div class="skillbar-bar" style="background: #6840D4;"></div>
+            <div class="skill-bar-percent">45%</div>
+          </div> <!-- End Skill Bar -->
+
+          <div class="skillbar clearfix " data-percent="30%">
+            <div class="skillbar-title" style="background: #06A2CB;"><span>jQuery</span></div>
+            <div class="skillbar-bar" style="background: #06A2CB;"></div>
+            <div class="skill-bar-percent">30%</div>
+          </div> <!-- End Skill Bar -->
+
+          <div class="skillbar clearfix " data-percent="20%">
+            <div class="skillbar-title" style="background: #AB4DD2;"><span>Python</span></div>
+            <div class="skillbar-bar" style="background: #AB4DD2;"></div>
+            <div class="skill-bar-percent">20%</div>
+          </div> <!-- End Skill Bar -->
+        </div>
+      </div>
+    </div>
+    <!-- end section -->
+
+    <!-- begin section -->
+
+    <div class="section" data-anchor="projects">
+      <div class="content-slide">
+        <div class="slide">
+          <h1 class="wow fadeInDown" data-wow-delay="0.2s"><a href="https://codepen.io/FRADAR/pen/zYNVjGo">IMessenger</a></h1>
+          <p class="wow fadeInDown" data-wow-delay="0.2s">Messaging Service</p>
+
+        </div>
+        <div class="slide">
+          <h1><a href="https://codepen.io/collection/ANeVpj">Games</a></h1>
+          <p>I have made many interesting games over the years.</p>
+        </div>
+        <div class="slide">
+          <h1><a href="https://codepen.io/FRADAR/full/bGgpyEP">My other Portfolio</a></h1>
+          <p>My mockup portfolio</p>
+        </div>
+        <div class="slide">
+          <h1>Extensions/Bookmarklets</h1>
+          <p>I have created many chrome extensions and bookmarklets.</p>
+        </div>
+        <div class="slide">
+          <h1>Websites</h1>
+          <p>I have created websites for myself.</p>
+        </div>
+        <div class="slide">
+            <h1><a href="https://codepen.io/FRADAR/full/WNoVEzy">The Impossible Game</a></h1>
+          <p>A game inspired by Geometry Dash.</p>
+        </div>
+        <div class="slide">
+            <h1><a href="https://codepen.io/FRADAR/full/zYNWZQQ">Car Riding Simulator</a></h1>
+          <p>A VR expirience.</p>
+        </div>
+        <div class="slide">
+            <h1><a href="https://codepen.io/collection/JGoErV">Multiplayer Online Games</a></h1>
+          <p>Play with people all around the world.</p>
+                  </div>
+        <div class="slide">
+            <h1><a href="https://codepen.io/FRADAR/full/JjWwOZX">Snake VS. Blocks</a></h1>
+          <p>A game with 15 levels where you need to eat all the food and avoid the blocks.</p>
+                  </div>
+                          </div>
+        <div class="slide">
+            <h1><a href="https://codepen.io/FRADAR/full/ZEeYKdK">The Invisible Lizard Hunter Game.</a></h1>
+          <p>A 2D fast-paced shooter game.</p>
+                  </div>
+        <div class="slide">
+            <h1>For more amazing games like these...</h1>
+          <p><a href="https://codepen.io/FRADAR">Click Here.</a></p>
+        </div>
+      </div>
+    </div>
+    <!-- end section -->
+
+    <!-- begin section -->
+
+    <div class="section" data-anchor="contact">
+      <div class="content wow fadeInDown" data-wow-delay="0.2s">
+        <h1>CONTACT ME</h1>
+        <p>Whether you're interested in working with me or just want to say hello, I'd love to hear from you!</p>
+        <br>
+        <div class="contact-form">
+
+          <div id="form-messages"></div>
+          <form id="ajax-contact" method="post" role="form" action="contact.php" data-toggle="validator">
+            <div class="form-group has-feedback wow fadeInLeft" data-wow-delay="0.6s">
+              <input type="text" class="form-control" id="name" name="name" placeholder="NAME" data-error="Field can't be blank!" required>
+              <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback wow fadeInRight" data-wow-delay="0.8s">
+              <input type="email" class="form-control" id="email" name="email" placeholder="EMAIL" data-error="Field can't be blank!" required>
+              <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback wow fadeInLeft" data-wow-delay="1s">
+              <textarea data-minlength="10" class="form-control" id="message" name="message" placeholder="MESSAGE" data-error="Minimum of 10 characters" required></textarea>
+              <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="hidden">
+              <input type="text" class="form-control" id="human" name="human" placeholder="">
+            </div>
+            <div class="wow fadeInUp" data-wow-delay="1s">
+              <button type="submit" id="submit" name="submit" class="btn btn-lg">SEND MESSAGE</button>
+            </div>
+          </form>
+          <br>
+        </div>
+      </div>
+    </div>
+    <!-- end section -->
+
+  <!-- end fullpage -->
+<!-- partial -->
+
+<script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.4/jquery.fullPage.min.js'></script>
+<!--<script src="javascripts/user.js"></script> -->
 <script src="javascripts/script.js"></script>
+<script src="javascripts/user/ajax-form.js"></script>
+<script src="javascripts/user/fullpage.js"></script>
+<script src="javascripts/user/main.js"></script>
+<script src="javascripts/user/nav.js"></script>
+<script src="javascripts/user/smooth.js"></script>
+<script src="javascripts/user/typing.js"></script>
+
+
 </body>
 </html>

@@ -4,7 +4,7 @@
     margin: 0;
 }
 
-/*设置全局字体*/
+/*设置全局*/
 body {
 
 }
@@ -22,6 +22,7 @@ header {
 #nav {
     border: none; /* 设置边框为无 */
     border-radius: 0; /* 设置边框的圆角为0，即没有圆角 */
+    height: 40px; /* 设置导航栏的高度为40px */
     margin: 0; /* 设置外边距为0 */
     display: flex; /* 使用 Flex 布局 */
     justify-content: right; /* 水平右对齐 */
@@ -36,17 +37,15 @@ header {
     color: red; /* 将当前页面链接的文字颜色设为红色 */
     font-weight: bold; /* 将当前页面链接的文字加粗 */
     background-color: rgb(170, 190, 255);
-    z-index: 2;
     display: inline-block;
+    height: 38px;
     border-radius: 10em;
 }
 
 #nav li a {
     position: relative;
-    padding: 15px 55px;
-    font: 500 18px '优设标题黑';
-    border: none;
-    outline: none;
+    padding: 10px 45px;
+    font: 500 16px '优设标题黑';
     color: rgb(70, 100, 180);
     display: inline-block;
     text-decoration: none;
@@ -58,7 +57,7 @@ header {
     .slide2 {
         position: absolute;
         display: inline-block;
-        height: 50px;
+        height: 40px;
         border-radius: 10em;
         transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1.05);
     }
@@ -75,63 +74,15 @@ header {
 
 /* 媒体查询：在较小的屏幕尺寸下修改导航栏样式 */
 @media screen and (max-width: 768px) {
-    #nav {
-        flex-direction: column; /* 将导航栏布局改为垂直方向 */
-        align-items: center; /* 将导航项居中对齐 */
-        padding: 0; /* 去除水平方向的内边距 */
+    #nav{
+        display: block; /* 将导航栏设置为块级元素 */
+        height: auto; /* 设置导航栏的高度为自动 */
+        box-shadow: none; /* 取消阴影效果 */
     }
-    #nav a {
-        display: block; /* 将链接改为块级元素 */
-        padding: 10px;
-    }
-    .slide1, .slide2, .squeeze {
+    .slide2, .squeeze {
         display: none; /* 隐藏滑块 */
     }
-    #menu-btn {
-        display: block; /* 显示菜单按钮 */
-    }
-    #nav.collapsed {
-        display: none; /* 初始状态下隐藏导航项 */
-    }
 }
-/* 控制菜单按钮样式 */
-#menu-btn {
-    display: none; /* 初始状态下隐藏按钮 */
-}
-
-
 
 /*section welcome模块*/
 /* Style the section */
-
-.welcome {
-  padding: 100px;
-  background: url("/images/big_data.jpg");
-}
-
-/* Center the content within the container */
-.container {
-  margin: 0 auto;
-}
-
-/* Style the heading */
-.welcome h2 {
-  font-size: 28px;
-  color: #333;
-}
-
-/* Style the paragraph */
-.welcome p {
-  font-size: 16px;
-  color: #666;
-  line-height: 1.6;
-}
-
-/* Style the image */
-.welcome img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
