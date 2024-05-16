@@ -1,7 +1,7 @@
 .welcome {
-  background-image: url('/images/sunset_small.jpg'); /* 设置背景图片 */
+  background-image: url('/images/lake.jpg'); /* 设置背景图片 */
   background-size: cover; /* 确保背景图片覆盖整个区域 */
   background-position: center; /* 将背景图片居中 */
   background-repeat: no-repeat; /* 防止背景图片重复 */
-  height: 94vh; /* 设置高度为视口高度 */
+  height: 94.5vh; /* 设置高度为视口高度 */
 }
