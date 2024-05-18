@@ -7,8 +7,9 @@
     <title>mypage</title>
     <!-- 引入 Bootstrap CSS 文件 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
     <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/form.css">
 </head>
 
 <body>
@@ -21,22 +22,26 @@
     </ul>
 </header>
 
-  <div class="container mt-5">
-    <h2 class="text-center mb-4">问卷调查</h2>
-    <form id="surveyForm">
-      <div id="questionContainer" class="form-group question-container">
-        <!-- 问题会在这里动态加载 -->
-      </div>
-      <div class="timer" id="timer">倒计时: 15秒</div>
-      <button type="button" id="nextButton" class="btn btn-primary mt-3" style="display: none;">下一题</button>
-      <button type="submit" id="submitButton" class="btn btn-success mt-3" style="display: none;">提交</button>
-    </form>
-  </div>
+<div class="container m_t_2">
+  <h1 class="text-white">Take the quiz to see if you are taking advantage of your customer's voice.</h1>
+  <div class="quiz">
+    <div class="p_1"><progress max="8" value="0"></progress></div>
+    <div class="progressData"><span class="current">0</span> / <span class="limit">0</span></div>
+    <div class="question card">
+      <p class="questionText"></p>
+      <div class="countdown">Time left: <span class="countdown-timer">15</span> seconds</div>
+      <div class="options"></div> <!-- END .options -->
+    </div> <!-- END .question -->
+  </div> <!-- END .quiz -->
+</div> <!-- END .container -->
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="/javascripts/form.js"></script>
-  <script src="javascripts/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="/javascripts/form.js"></script>
+    <script src="javascripts/script.js"></script>
+
 </body>
 </html>

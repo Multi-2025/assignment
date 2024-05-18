@@ -1,102 +1,137 @@
-const questions = [
-  {
-    text: "1. 你喜欢哪种水果？",
-    options: ["A. 苹果", "B. 香蕉", "C. 橙子", "D. 葡萄"]
-  },
-  {
-    text: "2. 你喜欢的季节是？",
-    options: ["A. 春季", "B. 夏季", "C. 秋季", "D. 冬季"]
-  },
-  {
-    text: "3. 你通常选择的交通工具是？",
-    options: ["A. 公交车", "B. 自行车", "C. 私家车", "D. 步行"]
+// Selectors // 选择器
+var $quizQuestionText = $('.quiz .question .questionText'); // 问题文本选择器
+var $quizQuestionOptions = $('.quiz .question .options'); // 问题选项选择器
+var $quizProgress = $('.quiz progress'); // 进度条选择器
+var $quizProgressDataCurrent = $('.quiz .progressData .current'); // 当前进度数据选择器
+var $quizProgressDataLimit = $('.quiz .progressData .limit'); // 进度限制数据选择器
+var $countdownTimer = $('.quiz .question .countdown-timer'); // 倒计时选择器
+
+// Data input for Questions and Results // 问题和结果的数据输入
+var questions = [{
+  text: '1. What’s your primary source of customer feedback?', // 你主要的客户反馈来源是什么？
+  answers: {
+    type: 'multiple', // 多选
+    options: [{
+      text: 'A. Google Reviews', // A. Google评论
+      weight: 1
+    }, {
+      text: 'B. Customer Service', // B. 客户服务
+      weight: 2
+    }]
   }
-];
+}];
 
-let currentQuestionIndex = 0;
-let countdownTimer;
-const userAnswers = {}; // 存储用户选择的对象
+var currentQuestion = 0; // default starting value // 默认起始值
+var totalScore = 0; // 用户总分数
+var timer; // 计时器变量
+var countdownInterval; // 倒计时间隔变量
 
-function loadQuestion(index) {
-  const question = questions[index];
-  const questionContainer = document.getElementById("questionContainer");
-  questionContainer.innerHTML = `
-    <label>${question.text}</label>
-    ${question.options.map((option, i) => `
-      <div class="custom-control custom-radio">
-        <input type="radio" id="option${index + 1}${i + 1}" name="question${index + 1}" class="custom-control-input" value="${option.charAt(0)}">
-        <label class="custom-control-label" for="option${index + 1}${i + 1}">${option}</label>
-      </div>
-    `).join('')}
-  `;
-  resetTimer();
-  hideNextButton();
+// 初始化Socket.IO
+var socket = io();
+
+function quizInit() {
+  $quizProgress.attr("max", questions.length); // 设置进度条的最大值
+  $quizProgressDataLimit.html(questions.length); // 显示问题总数
+  renderQuestion(); // 渲染问题
+
+  // 连接到Socket.IO
+  socket.on('connect', function() {
+    console.log('Connected to server');
+  });
+
+  // 接收实时消息
+  socket.on('message', function(data) {
+    console.log('Message from server:', data);
+  });
 }
 
-function resetTimer() {
-  clearInterval(countdownTimer);
-  let timeLeft = 15;
-  const timerElement = document.getElementById("timer");
-  timerElement.textContent = `倒计时: ${timeLeft}秒`;
-
-  countdownTimer = setInterval(() => {
-    timeLeft--;
-    timerElement.textContent = `倒计时: ${timeLeft}秒`;
-    if (timeLeft <= 0) {
-      clearInterval(countdownTimer);
-      goToNextQuestion();
+// RENDER // 渲染
+function renderQuestion() {
+  var question = questions[currentQuestion]; // 当前问题
+  var optionsHtml = []; // 选项HTML数组
+  var questionText = question.text; // 问题文本
+  var questionOptionText = question.answers.options; // 问题选项文本
+  $quizQuestionText.html(questionText); // 设置问题文本
+  for (var i = 0; i < questionOptionText.length; i++) {
+    var questionOptionItem = ''; // 问题选项
+    if (question.answers.type === 'range') {
+      questionOptionItem =
+        '<button class="quiz-opt range" data-weight="' +
+        questionOptionText[i].weight + '">' +
+        questionOptionText[i].text + '</button>';
+    } else {
+      questionOptionItem =
+        '<button class="quiz-opt" data-weight="' +
+        questionOptionText[i].weight + '">' +
+        questionOptionText[i].text + '</button>';
     }
-  }, 1000);
+    optionsHtml.push(questionOptionItem); // 添加选项HTML
+  }
+  $quizQuestionOptions.html(optionsHtml.join('')); // 设置选项HTML
+  $('.quiz button').click(recordAnswer); // 为按钮添加点击事件
+
+  startTimer(); // 开始计时器
 }
 
-function showNextButton() {
-  document.getElementById("nextButton").style.display = "inline-block";
+// TIMER // 计时器
+function startTimer() {
+  var timeLeft = 15; // 15秒倒计时
+  $countdownTimer.html(timeLeft); // 设置倒计时显示
+  clearInterval(countdownInterval); // 清除之前的倒计时间隔
+  clearTimeout(timer); // 清除之前的计时器
+
+  countdownInterval = setInterval(function() {
+    timeLeft -= 1;
+    $countdownTimer.html(timeLeft);
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval); // 时间到清除倒计时
+      nextQuestion(); // 跳转到下一个问题
+    }
+  }, 1000); // 每秒更新一次
+
+  timer = setTimeout(function() {
+    clearInterval(countdownInterval); // 时间到清除倒计时
+    nextQuestion(); // 跳转到下一个问题
+  }, 15000); // 15秒后跳转到下一个问题
 }
 
-function hideNextButton() {
-  document.getElementById("nextButton").style.display = "none";
+// RECORD ANSWER // 记录答案
+function recordAnswer() {
+  var selectedWeight = parseInt($(this).data('weight')); // 获取所选项的权重
+  totalScore += selectedWeight; // 增加权重到总分数
+  clearTimeout(timer); // 用户回答时清除计时器
+  clearInterval(countdownInterval); // 用户回答时清除倒计时
+
+  // 向服务器发送消息
+  socket.emit('answer', {
+    question: currentQuestion,
+    weight: selectedWeight
+  });
+
+  nextQuestion(); // 跳转到下一个问题
 }
 
-function showSubmitButton() {
-  document.getElementById("submitButton").style.display = "inline-block";
-}
-
-function goToNextQuestion() {
-  saveAnswer(); // 在跳到下一题之前保存当前选择
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    loadQuestion(currentQuestionIndex);
+// HANDLER // 处理器
+function nextQuestion() {
+  currentQuestion += 1; // 当前问题加1
+  $quizProgress.attr("value", currentQuestion); // 更新进度条的值
+  $quizProgressDataCurrent.html(currentQuestion); // 更新当前进度文本
+  if (questions.length === currentQuestion) {
+    showResults(); // 显示最后一个页面
   } else {
-    document.getElementById("questionContainer").innerHTML = '<p>问卷已完成，谢谢您的参与！</p>';
-    hideNextButton();
-    showSubmitButton();
-    document.getElementById("timer").style.display = "none";
+    renderQuestion(); // 渲染下一个问题
   }
 }
 
-function saveAnswer() {
-  const selectedOption = document.querySelector(`input[name="question${currentQuestionIndex + 1}"]:checked`);
-  if (selectedOption) {
-    userAnswers[currentQuestionIndex] = selectedOption.value;
-  }
+// RESULTS // 结果
+function showResults() {
+  $('.quiz .question').html(
+    '<p class="questionText">Quiz Complete! Here are the Results!</p>' +
+    '<p class="questionText">Your Score is: ' + totalScore + '</p>'
+  );
 }
 
-function getUserAnswers() {
-  return userAnswers;
-}
-
-document.getElementById("surveyForm").addEventListener("change", () => {
-  showNextButton();
-});
-
-document.getElementById("nextButton").addEventListener("click", () => {
-  goToNextQuestion();
-});
-
-// 初始化加载第一个问题
-loadQuestion(currentQuestionIndex);
-
-// 提交按钮点击事件，展示用户的选择
-document.getElementById("submitButton").addEventListener("click", () => {
-  console.log(getUserAnswers()); // 打印用户选择的答案，可以根据需要进行处理
+// Init render // 初始化渲染
+$(function() {
+  quizInit();
 });

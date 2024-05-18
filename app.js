@@ -31,20 +31,21 @@ app.use('/form', formRouter);
 app.use('/users', usersRouter);
 app.use('/test', testRouter)
 
-/*
-io.on('connection', (socket) => {
-  console.log('A user connected');
 
-  socket.on('nextQuestion', (currentQuestionIndex) => {
-    io.emit('updateQuestion', currentQuestionIndex + 1);
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('answer', (data) => {
+    console.log('Answer received:', data);
+    // 可以在这里处理答案数据，比如存储到数据库或进行实时分析
   });
 
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+    console.log('user disconnected');
   });
 });
 
- */
+/*
 io.on('connection', (socket) => {
   console.log('A user connected');
 
@@ -62,7 +63,7 @@ io.on('connection', (socket) => {
     console.log('User disconnected');
   });
 });
-
+*/
 
 console.log("http://localhost:3000");
 console.log(" ");
