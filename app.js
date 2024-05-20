@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
 
   socket.on('answer', (data) => {
     console.log('Answer received:', data);
-    // 可以在这里处理答案数据，比如存储到数据库或进行实时分析
+      socket.emit('answer', data);
   });
 
   socket.on('disconnect', () => {
