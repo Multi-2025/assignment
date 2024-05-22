@@ -26,4 +26,22 @@ async function run() {
 run().catch(console.dir);
 
 
+/*
+io.on('connection', (socket) => {
+  console.log('A user connected');
 
+  // 添加一个简单的事件测试消息传递
+  socket.on('testEvent', (data) => {
+    console.log('Received testEvent with data:', data);
+    socket.emit('testResponse', 'Response from server');
+  });
+
+  socket.on('nextQuestion', (currentQuestionIndex) => {
+    io.emit('updateQuestion', currentQuestionIndex + 1);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+});
+*/

@@ -23,7 +23,7 @@ h1 {
 }
 
 .quiz progress::-webkit-progress-value {
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 98, 255, 0.84);
   transition: all 1s ease;
 }
 
@@ -40,7 +40,7 @@ h1 {
 }
 /* CUSTOM STYLES BELOW */
 /* Utility Styles */
-.m_t_2 {margin-top:2rem;}
+.m_t_2 {margin-top:0rem;}
 /* .p_1 {padding:0 1rem;} */
 .card {
   box-shadow: 10px 10px 30px 0 rgba(0, 0, 0, 0.15);
@@ -52,7 +52,7 @@ h1 {
 
 /* Section Styles */
 .quiz {
-  margin-top:2rem;
+  margin-top: 1rem;
 }
 .quiz .question {}
 .quiz .question.card {
@@ -61,7 +61,6 @@ h1 {
 .questionText {
   font-size:1.75rem;
 }
-.quiz .question .options {}
 .quiz .question .options button.quiz-opt {
   display:block;
   margin:1rem 0;
@@ -72,6 +71,7 @@ h1 {
   text-align:left;
   background:none;
   outline:none;
+  width: 50%;
 }
 .quiz .question .options button.quiz-opt.range {
   display:inline-block;
@@ -96,6 +96,6 @@ h1 {
 
 @media (max-width: 700px) {
   .quiz .question .options button.quiz-opt.range {
-    margin-right:1rem;
+    margin-right: 1rem;
     padding:1.5rem;
 }}

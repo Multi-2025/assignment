@@ -1,0 +1,63 @@
+.leaderboard {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  width: 80%;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.leaderboard h2 {
+  text-align: center;
+  background-color: #2c3e50;
+  color: white;
+  padding: 15px 0;
+  margin: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.leaderboard ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.leaderboard li {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s;
+}
+
+.leaderboard li:nth-child(odd) {
+  background-color: #f7f7f7;
+}
+
+.leaderboard li:nth-child(even) {
+  background-color: #fcfcfc;
+}
+
+.leaderboard li:hover {
+  background-color: #eaeaea;
+}
+
+.leaderboard li .userId,
+.leaderboard li .lastScore {
+  flex: 1;
+}
+
+.leaderboard li .userId {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.leaderboard li .lastScore {
+  text-align: right;
+  color: #888;
+}
+
+.leaderboard li:last-child {
+  border-bottom: none;
+}

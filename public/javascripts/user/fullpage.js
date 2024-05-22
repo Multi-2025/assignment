@@ -1,7 +1,7 @@
 $(document).ready(function () { // 当文档加载完毕时执行
   $("#fullpage").fullpage({ // 初始化 fullPage 插件
     scrollBar: true, // 启用滚动条
-    responsiveWidth: 400, // 响应式宽度设为400px
+    responsiveWidth: 600, // 设置响应式宽度为400px
     navigation: true, // 启用导航
     navigationTooltips: ["Home", "About", "Portfolio", "Contact"], // 设置导航提示
     anchors: ["Home", "About", "Portfolio", "Contact"], // 设置锚点链接
