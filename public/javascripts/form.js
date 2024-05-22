@@ -137,14 +137,24 @@ function showResults() {
 // LEADERBOARD // 排行榜
 function showLeaderboard(data) {
   console.log('Leaderboard Data:', data);
-  var leaderboardHtml = '<h2>Leaderboard</h2><ol>';
+  var leaderboardHtml = `
+    <h2 style="font-size: 24px; color: #ffffff; text-align: center;">Leaderboard</h2>
+    <ol style="list-style-type: none; padding: 0;">
+  `;
 
   for (var i = 0; i < data.length; i++) {
-    leaderboardHtml += '<li><span class="userId">' + data[i]._id + '</span><span class="lastScore">' + data[i].lastScore + '</span></li>';
+    leaderboardHtml += `
+      <li style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ccc;">
+        <span class="userId" style="font-weight: bold;">${data[i]._id}</span>
+        <span class="lastScore" style="color: #666;">${data[i].lastScore}</span>
+      </li>
+    `;
   }
   leaderboardHtml += '</ol>';
   $leaderboard.html(leaderboardHtml);
 }
+
+
 
 
 
@@ -154,96 +164,184 @@ $(function() {
 });
 
 
-// Data input for Questions and Results // 问题和结果的数据输入
 var questions = [{
-  text: '1. What’s your primary source of customer feedback?', // 你主要的客户反馈来源是什么？
+  text: '1. How many corners does the Shanghai International Circuit have?', // 上海国际赛车场有多少个弯？
   answers: {
     type: 'multiple', // 多选
     options: [{
-      text: 'A. Google Reviews', // A. Google评论
+      text: 'A. 20', // C. 20个
+      weight: 2
+    }, {
+      text: 'B. 16', // A. 16个
+      weight: 4
+    }, {
+      text: 'C. 22', // D. 22个
       weight: 1
     }, {
-      text: 'B. Customer Service', // B. 客户服务
-      weight: 2
-    },{
-      text: 'C. Social Media', // C. 社交媒体
-      weight: 4
-    },{
-      text: 'D. Email', // D. 电子邮件
+      text: 'D. 18', // B. 18个
       weight: 3
     }]
   }
 }, {
-  text: '2. How would you rate your customer service?', // 你如何评价你的客户服务？
+  text: '2. Which team has won the most Constructors\' Championships?', // 哪个车队赢得了最多的车队冠军？
   answers: {
-    type: 'multiple', // 范围
+    type: 'multiple', // 多选
     options: [{
-      text: 'Poor', // 差
+      text: 'A. Ferrari', // A. 法拉利
+      weight: 4
+    }, {
+      text: 'B. Mercedes', // C. 梅赛德斯
+      weight: 2
+    }, {
+      text: 'C. Red Bull Racing', // D. 红牛车队
       weight: 1
     }, {
-      text: 'Fair', // 一般
-      weight: 2
-    },{
-      text: 'Good', // 好
+      text: 'D. McLaren', // B. 迈凯伦
       weight: 3
-    },{
-      text: 'Excellent', // 优秀
+    }]
+  }
+}, {
+  text: '3. In what year was the first Formula 1 World Championship held?', // 第一次F1世界锦标赛在哪一年举行？
+  answers: {
+    type: 'multiple', // 多选
+    options: [{
+      text: 'A. 1955', // A. 1950年
+      weight: 1
+    }, {
+      text: 'B. 1960', // D. 1960年
+      weight: 1
+    }, {
+      text: 'C. 1948', // B. 1948年
+      weight: 2
+    }, {
+      text: 'D. 1950', // C. 1955年
       weight: 4
     }]
   }
 }, {
-  text: '3. How would you rate your product quality?', // 你如何评价你的产品质量？
+  text: '4. Which circuit is known as the "Temple of Speed"?', // 哪条赛道被称为“速度圣殿”？
   answers: {
-    type: 'multiple', // 范围
+    type: 'multiple', // 多选
     options: [{
-      text: 'Poor', // 差
+      text: 'A. Spa-Francorchamps', // C. 斯帕-弗朗科尔尚赛道
+      weight: 2
+    }, {
+      text: 'B. Monza', // A. 蒙扎
+      weight: 4
+    }, {
+      text: 'C. Silverstone', // B. 银石赛道
+      weight: 2
+    }, {
+      text: 'D. Suzuka', // D. 铃鹿赛道
+      weight: 1
+    }]
+  }
+}, {
+  text: '5. Who was the youngest driver to win a Formula 1 race?', // 谁是最年轻的F1比赛冠军车手？
+  answers: {
+    type: 'multiple', // 多选
+    options: [{
+      text: 'A. Sebastian Vettel', // B. 塞巴斯蒂安·维特尔
+      weight: 3
+    }, {
+      text: 'B. Max Verstappen', // A. 马克斯·维斯塔潘
+      weight: 4
+    }, {
+      text: 'C. Lewis Hamilton', // D. 刘易斯·汉密尔顿
       weight: 1
     }, {
-      text: 'Fair', // 一般
+      text: 'D. Fernando Alonso', // C. 费尔南多·阿隆索
       weight: 2
-    },{
-      text: 'Good', // 好
+    }]
+  }
+}, {
+  text: '6. Which driver tragically lost their life during the 1994 San Marino Grand Prix?', // 哪位车手在1994年圣马力诺大奖赛中不幸丧生？
+  answers: {
+    type: 'multiple', // 多选
+    options: [{
+      text: 'A. Ayrton Senna', // A. 艾尔顿·塞纳
+      weight: 4
+    }, {
+      text: 'B. Jochen Rindt', // D. 乔亨·林特
+      weight: 1
+    }, {
+      text: 'C. Gilles Villeneuve', // C. 吉尔·维伦纽夫
+      weight: 2
+    }, {
+      text: 'D. Roland Ratzenberger', // B. 罗兰德·拉岑伯格
       weight: 3
-    },{
-      text: 'Excellent', // 优秀
+    }]
+  }
+}, {
+  text: '7. Which tyre manufacturer is the current supplier for Formula 1?', // 目前F1的轮胎供应商是哪家？
+  answers: {
+    type: 'multiple', // 多选
+    options: [{
+      text: 'A. Pirelli', // A. 倍耐力
+      weight: 4
+    }, {
+      text: 'B. Goodyear', // D. 固特异
+      weight: 1
+    }, {
+      text: 'C. Michelin', // B. 米其林
+      weight: 2
+    }, {
+      text: 'D. Bridgestone', // C. 普利司通
+      weight: 1
+    }]
+  }
+}, {
+  text: '8. Which driver won the 2021 Formula 1 World Championship?', // 哪位车手赢得了2021年F1世界锦标赛？
+  answers: {
+    type: 'multiple', // 多选
+    options: [{
+      text: 'A. Sergio Perez', // D. 塞尔吉奥·佩雷兹
+      weight: 1
+    }, {
+      text: 'B. Max Verstappen', // A. 马克斯·维斯塔潘
+      weight: 4
+    }, {
+      text: 'C. Lewis Hamilton', // B. 刘易斯·汉密尔顿
+      weight: 3
+    }, {
+      text: 'D. Valtteri Bottas', // C. 瓦尔特利·博塔斯
+      weight: 2
+    }]
+  }
+}, {
+  text: '9. What is the maximum number of points a driver can earn in a single Grand Prix weekend (as of 2023)?', // 在2023年，车手在单个大奖赛周末最多可以获得多少积分？
+  answers: {
+    type: 'multiple', // 多选
+    options: [{
+      text: 'A. 24 points', // A. 26分
+      weight: 2
+    }, {
+      text: 'B. 28 points', // D. 28分
+      weight: 1
+    }, {
+      text: 'C. 25 points', // B. 25分
+      weight: 3
+    }, {
+      text: 'D. 26 points', // C. 24分
       weight: 4
     }]
   }
 }, {
-  text: '4. How likely are you to recommend us to a friend or colleague?', // 你会向朋友或同事推荐我们吗？
+  text: '10. Which driver is known as "The Professor" in Formula 1?', // 哪位车手在F1中被称为“教授”？
   answers: {
-    type: 'multiple', // 范围
+    type: 'multiple', // 多选
     options: [{
-      text: 'Not Likely', // 不太可能
+      text: 'A. Alain Prost', // A. 阿兰·普罗斯特
+      weight: 4
+    }, {
+      text: 'B. Niki Lauda', // B. 尼基·劳达
+      weight: 2
+    }, {
+      text: 'C. Nelson Piquet', // D. 内尔森·皮奎特
       weight: 1
     }, {
-      text: 'Maybe', // 可能
+      text: 'D. Jackie Stewart', // C. 杰基·斯图尔特
       weight: 2
-    },{
-      text: 'Likely', // 可能
-      weight: 3
-    },{
-      text: 'Very Likely', // 非常可能
-      weight: 4
     }]
   }
-}, {
-  text: '5. How would you rate your overall experience with us?', // 你如何评价你与我们的整体体验？
-  answers: {
-    type: 'multiple', // 范围
-    options: [{
-      text: 'Poor', // 差
-      weight: 1
-    }, {
-      text: 'Fair', // 一般
-      weight: 2
-    },{
-      text: 'Good', // 好
-      weight: 3
-    },{
-      text: 'Excellent', // 优秀
-      weight: 4
-    }]
-  }
-}
-];
+}];
