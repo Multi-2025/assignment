@@ -6,12 +6,14 @@ var $quizProgressDataCurrent = $('.quiz .progressData .current'); // 当前进�
 var $quizProgressDataLimit = $('.quiz .progressData .limit'); // 进度限制数据选择器
 var $countdownTimer = $('.quiz .question .countdown-timer'); // 倒计时选择器
 var $leaderboard = $('.quiz .leaderboard'); // 排行榜选择器
+var $startScreen = $('.quiz .start-screen'); // 开始屏幕选择器
 
 var currentQuestion = 0; // default starting value // 默认起始值
 var totalScore = 0; // 用户总分数
 var timer; // 计时器变量
 var countdownInterval; // 倒计时间隔变量
 var userid = Date.now() + Math.floor(Math.random() * 1000); // 生成一个基于当前时间戳和随机数的用户ID
+var username = ''; // 用户名
 console.log('Generated UserID:', userid); // 打印生成的用户ID
 
 // Socket.IO
@@ -19,9 +21,7 @@ console.log('Generated UserID:', userid); // 打印生成的用户ID
 var socket = io();
 
 function quizInit() {
-  $quizProgress.attr("max", questions.length); // 设置进度条的最大值
-  $quizProgressDataLimit.html(questions.length); // 显示问题总数
-  renderQuestion(); // 渲染问题
+  showStartScreen(); // 显示开始屏幕
 
   // 连接到Socket.IO
   socket.on('connect', function() {
@@ -37,6 +37,32 @@ function quizInit() {
   socket.on('leaderboard', function(data) {
     showLeaderboard(data);
   });
+}
+
+// 显示开始屏幕
+function showStartScreen() {
+  $startScreen.html(`
+    <div class="start-screen-content">
+      <label for="username">Enter your name:</label>
+      <input type="text" id="username" name="username">
+      <button id="start-quiz">Start Quiz</button>
+    </div>
+  `);
+  $('#start-quiz').click(startQuiz);
+}
+
+// 开始测验
+function startQuiz() {
+  username = $('#username').val();
+  if (username.trim() === '') {
+    alert('Please enter your name.');
+    return;
+  }
+  $startScreen.hide();
+  $('.quiz .question').show();
+  $quizProgress.attr("max", questions.length); // 设置进度条的最大值
+  $quizProgressDataLimit.html(questions.length); // 显示问题总数
+  renderQuestion(); // 渲染问题
 }
 
 // RENDER // 渲染
@@ -95,6 +121,7 @@ function recordAnswer() {
   // 向服务器发送消息
   socket.emit('answer', {
     userId: userid,
+    username: username, // 添加用户名
     question: currentQuestion,
     opt: $(this).text(),
     weight: selectedWeight,
@@ -155,35 +182,49 @@ function nextQuestion() {
 // RESULTS // 结果
 function showResults() {
   $('.quiz .question').html(
-     '<p class="questionText">Your ID: ' + userid + '</p>' +
+    '<p class="questionText">Your ID: ' + userid + '</p>' +
+    '<p class="questionText">Your Name: ' + username + '</p>' +
     '<p class="questionText">Quiz Complete! Here are the Results!</p>' +
     '<p class="questionText">Your Score is: ' + totalScore + '</p>'
   );
   socket.emit('requestLeaderboard'); // 请求排行榜数据
 }
 
-// LEADERBOARD // 排行榜
 function showLeaderboard(data) {
   console.log('Leaderboard Data:', data);
-  var leaderboardHtml = `
+  let leaderboardHtml = `
     <h2 style="font-size: 24px; color: #ffffff; text-align: center;">Leaderboard</h2>
     <ol style="list-style-type: none; padding: 0;">
+      <li style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ccc; font-weight: bold;">
+        <span class="username" style="flex: 1;">Username</span>
+        <span class="userId" style="flex: 2;">User ID</span>
+        <span class="lastScore" style="flex: 1; text-align: right;">Last Score</span>
+      </li>
   `;
 
+  // 循环生成每一行的HTML
   for (var i = 0; i < data.length; i++) {
     leaderboardHtml += `
       <li style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ccc;">
-        <span class="userId" style="font-weight: bold;">${data[i]._id}</span>
-        <span class="lastScore" style="color: #666;">${data[i].lastScore}</span>
+        <span class="username" style="flex: 1; font-weight: bold;">${data[i].username}</span>
+        <span class="userId" style="flex: 2; font-weight: bold;">${data[i]._id}</span>
+        <span class="lastScore" style="flex: 1; color: #666; text-align: right;">${data[i].lastScore}</span>
       </li>
     `;
   }
+
   leaderboardHtml += '</ol>';
   $leaderboard.html(leaderboardHtml);
 }
 
+
+
 // Init render // 初始化渲染
-$(function(){ quizInit(); });
+$(function() {
+  $('.quiz .question').hide(); // 隐藏问题部分
+  quizInit();
+});
+
 
 
 

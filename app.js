@@ -75,6 +75,7 @@ socket.on('requestLeaderboard', async () => { // 监听客户端请求排行榜�
       {
         $group: {
           _id: "$userId", // 按 userId 分组
+          username: { $last: "$username" }, // Get the last username in each group
           lastScore: { $last: "$score" } // 获取每个分组中最后一个文档的 score 字段值
         }
       },

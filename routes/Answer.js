@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const answerSchema = new mongoose.Schema({
   userId: Number,
+  username: String,
   question: Number,
   opt: String,
   weight: Number,
