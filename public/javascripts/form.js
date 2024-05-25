@@ -43,13 +43,19 @@ function quizInit() {
 function showStartScreen() {
   $startScreen.html(`
     <div class="start-screen-content">
-      <label for="username">Enter your name:</label>
-      <input type="text" id="username" name="username">
-      <button id="start-quiz">Start Quiz</button>
+      <form id="start-form">
+        <label for="username">Enter your name:</label>
+        <input type="text" id="username" name="username" class="input-field">
+        <button type="submit" id="start-quiz" class="submit-button">Start Quiz</button>
+      </form>
     </div>
   `);
-  $('#start-quiz').click(startQuiz);
+  $('#start-form').submit(function(event) {
+    event.preventDefault();
+    startQuiz();
+  });
 }
+
 
 // 开始测验
 function startQuiz() {
@@ -253,7 +259,10 @@ var questions = [{
       weight: 3
     }]
   }
-}, {
+}, ];
+
+  /*
+  {
   text: '2. Which team has won the most Constructors\' Championships?', // 哪个车队赢得了最多的车队冠军？
   answers: {
     type: 'multiple', // 多选
@@ -416,3 +425,5 @@ var questions = [{
     }]
   }
 }];
+
+   */

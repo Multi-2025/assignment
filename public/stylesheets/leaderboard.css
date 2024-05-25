@@ -1,10 +1,10 @@
 .leaderboard {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  width: 80%;
-  margin: 20px auto;
-  border: 1px solid #ccc;
+  width: 100%;
+  margin: 10px auto;
+  border: 1px solid #ffffff;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
   overflow: hidden;
   padding: 20px;
 }
