@@ -14,7 +14,7 @@ var countdownInterval; // 倒计时间隔变量
 var userid = Date.now() + Math.floor(Math.random() * 1000); // 生成一个基于当前时间戳和随机数的用户ID
 console.log('Generated UserID:', userid); // 打印生成的用户ID
 
-
+// Socket.IO
 // 初始化Socket.IO
 var socket = io();
 
@@ -48,21 +48,14 @@ function renderQuestion() {
   $quizQuestionText.html(questionText); // 设置问题文本
   for (var i = 0; i < questionOptionText.length; i++) {
     var questionOptionItem = ''; // 问题选项
-    if (question.answers.type === 'range') {
-      questionOptionItem =
-        '<button class="quiz-opt range" data-weight="' +
-        questionOptionText[i].weight + '">' +
-        questionOptionText[i].text + '</button>';
-    } else {
-      questionOptionItem =
-        '<button class="quiz-opt" data-weight="' +
-        questionOptionText[i].weight + '">' +
-        questionOptionText[i].text + '</button>';
-    }
+    questionOptionItem =
+      '<button class="quiz-opt" data-weight="' +
+      questionOptionText[i].weight + '">' +
+      questionOptionText[i].text + '</button>';
     optionsHtml.push(questionOptionItem); // 添加选项HTML
   }
   $quizQuestionOptions.html(optionsHtml.join('')); // 设置选项HTML
-  $('.quiz button').click(recordAnswer); // 为按钮添加点击事件
+  $('.quiz button.quiz-opt').click(recordAnswer); // 为按钮添加点击事件
 
   startTimer(); // 开始计时器
 }
@@ -79,24 +72,22 @@ function startTimer() {
     $countdownTimer.html(timeLeft);
     if (timeLeft <= 0) {
       clearInterval(countdownInterval); // 时间到清除倒计时
-      nextQuestion(); // 跳转到下一个问题
+      showCorrectAnswer(); // 显示正确答案
+      showNextButton(); // 显示跳转按钮
     }
   }, 1000); // 每秒更新一次
 
   timer = setTimeout(function() {
     clearInterval(countdownInterval); // 时间到清除倒计时
-    if (currentQuestion < questions.length){
-        nextQuestion(); // 跳转到下一个问题
-    }
-    else {
-        showResults(); // 显示最后一个页面
-    }
+    showCorrectAnswer(); // 显示正确答案
+    showNextButton(); // 显示跳转按钮
   }, 15000); // 15秒后跳转到下一个问题
 }
 
 // RECORD ANSWER // 记录答案
 function recordAnswer() {
   var selectedWeight = parseInt($(this).data('weight')); // 获取所选项的权重
+  var isCorrect = selectedWeight === 4; // 判断是否正确，权重为4的为正确答案
   totalScore += selectedWeight; // 增加权重到总分数
   clearTimeout(timer); // 用户回答时清除计时器
   clearInterval(countdownInterval); // 用户回答时清除倒计时
@@ -109,8 +100,45 @@ function recordAnswer() {
     weight: selectedWeight,
     score: totalScore
   });
-  nextQuestion(); // 跳转到下一个问题
+
+  showCorrectAnswer(isCorrect); // 显示正确答案
+  showNextButton(); // 显示跳转按钮
 }
+
+function showCorrectAnswer(isCorrect) {
+  var question = questions[currentQuestion];
+  var correctAnswer = question.answers.options.find(opt => opt.weight === 4);
+  var message = isCorrect ? "Correct!\n" : "Incorrect!\n";
+  var messageresult = "The correct answer is:  \n" ;
+  var messageresult2 = correctAnswer.text;
+  var messageColor = isCorrect ? "rgba(104,255,104,0.41)" : "rgba(255,0,0,0.56)";
+  $quizQuestionOptions.html(`
+    <h2 style="color: ${messageColor};">${message}</h2>
+    <h3 style="color: ${messageColor};">${messageresult}${messageresult2}</h3>
+  `);
+}
+
+
+// SHOW NEXT BUTTON // 显示跳转按钮
+function showNextButton() {
+  $quizQuestionOptions.append('<div style="text-align: right;">' +
+    '<button id="next-question" style="\n' +
+      '  background-color: rgba(53,150,188,0.62); \n' +
+      '  border: none;\n' +
+      '  color: white;\n' +
+      '  padding: 20px 32px; /* 增加上下内边距 */\n' +
+      '  text-align: center;\n' +
+      '  text-decoration: none;\n' +
+      '  display: inline-block;\n' +
+      '  font-size: 16px;\n' +
+      '  margin: 10px 2px; /* 增加上下外边距 */\n' +
+      '  cursor: pointer;\n' +
+      '  border-radius: 4px;\n' +
+      '">Next Question</button>' +
+    '</div>');
+  $('#next-question').click(nextQuestion); // 添加点击事件
+}
+
 
 // HANDLER // 处理器
 function nextQuestion() {
@@ -154,16 +182,18 @@ function showLeaderboard(data) {
   $leaderboard.html(leaderboardHtml);
 }
 
-
-
-
-
 // Init render // 初始化渲染
-$(function() {
-  quizInit();
-});
+$(function(){ quizInit(); });
 
 
+
+
+
+
+
+
+
+// 问题 //
 var questions = [{
   text: '1. How many corners does the Shanghai International Circuit have?', // 上海国际赛车场有多少个弯？
   answers: {
