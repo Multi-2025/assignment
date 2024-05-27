@@ -93,8 +93,8 @@ $(document).ready(function () {
     scrollBar: true, // 启用滚动条
     responsiveWidth: 400, // 响应式宽度
     navigation: true, // 显示导航
-    navigationTooltips: ["Home", "About", "Portfolio", "Contact"], // 导航提示
-    anchors: ["Home", "About", "Portfolio", "Contact"], // 锚点
+    navigationTooltips: ["Home", "About", "Portfolio","Game", "Contact"], // 导航提示
+    anchors: ["Home", "About", "Portfolio","Game", "Contact"], // 锚点
     menu: "#myMenu", // 菜单
     fitToSection: false, // 不自动适应部分
 

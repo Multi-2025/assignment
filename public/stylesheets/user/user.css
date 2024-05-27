@@ -24,6 +24,7 @@ p {
 
 .section {
   text-align: center;
+  height: auto;
 }
 
 .skillbar {
@@ -143,12 +144,12 @@ p {
 .opaque-bg {
   margin-left: auto;
   margin-right: auto;
-  max-width: 380px;
+  max-width: 500px;
   padding: 1px 1px 5px 5px;
 }
 
 .aboutme {
-  background: url("/images/lake.jpg") no-repeat center center fixed;
+  background: url("/images/redbull.jpg") no-repeat center center fixed;
   background-size: cover;
   height: 80vh;
   overflow: hidden;
@@ -156,9 +157,9 @@ p {
 
 
 .aboutme p {
-  color: white;
-  font-weight: 100;
-  font-size: 17.4px;
+  color: #ffffff;
+  font-family: "Raleway", sans-serif;
+  font-size: 24px;
 }
 
 /* bouncing arrow */

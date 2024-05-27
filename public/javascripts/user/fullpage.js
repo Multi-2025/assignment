@@ -3,8 +3,8 @@ $(document).ready(function () { // 当文档加载完毕时执行
     scrollBar: true, // 启用滚动条
     responsiveWidth: 600, // 设置响应式宽度为400px
     navigation: true, // 启用导航
-    navigationTooltips: ["Home", "About", "Portfolio", "Contact"], // 设置导航提示
-    anchors: ["Home", "About", "Portfolio", "Contact"], // 设置锚点链接
+    navigationTooltips: ["Home", "About", "Portfolio","Game" , "Contact"], // 设置导航提示
+    anchors: ["Home", "About", "Portfolio","Game" , "Contact"], // 设置锚点链接
     menu: "#myMenu", // 绑定菜单
     fitToSection: false, // 关闭自动适应部分
     afterLoad: function (anchorLink, index) { // 在部分加载后执行

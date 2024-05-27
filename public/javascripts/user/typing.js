@@ -12,5 +12,5 @@
 })(jQuery);
 
 $(document).ready(function () {
-  $("#holder").writeText("GAME DEVELOPER + WEB DESIGNER");
+  $("#holder").writeText("A student of BMIS + A fan of Formula 1");
 });
