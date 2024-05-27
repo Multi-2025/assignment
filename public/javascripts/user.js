@@ -19,7 +19,7 @@ $(document).ready(function () {
   })(jQuery);
 
   // 为元素#holder设置打字动画，内容为"GAME DEVELOPER + WEB DESIGNER"
-  $("#holder").writeText("GAME DEVELOPER + WEB DESIGNER");
+  $("#holder").writeText("A student of BMIS + A fan of Formula 1");
 
   // 初始化wow.js动画库
   new WOW().init();

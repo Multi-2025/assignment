@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Usage Chart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+}
+
+.chart-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.chart {
+    display: flex;
+    height: 30px;
+    margin-bottom: 20px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+
+.legend .color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 8px;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+</style>
+<body>
+    <div class="chart-container">
+        <div class="chart"></div>
+        <div class="legend"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+<script>
+    const languages = [
+    { name: 'C++', percentage: 68.7, color: '#ff6384' },
+    { name: 'C', percentage: 18.2, color: '#4d4d4d' },
+    { name: 'JavaScript', percentage: 6.7, color: '#ffcd56' },
+    { name: 'CSS', percentage: 3.1, color: '#c45850' },
+    { name: 'Python', percentage: 2.0, color: '#36a2eb' },
+    { name: 'Objective-C++', percentage: 0.4, color: '#9966ff' },
+    { name: 'Other', percentage: 0.9, color: '#cccccc' },
+];
+
+const chart = document.querySelector('.chart');
+const legend = document.querySelector('.legend');
+
+languages.forEach(language => {
+    // Create bar
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.width = language.percentage + '%';
+    bar.style.backgroundColor = language.color;
+    chart.appendChild(bar);
+
+    // Create legend item
+    const legendItem = document.createElement('div');
+    legendItem.className = 'legend-item';
+    legendItem.innerHTML = `<span class="color" style="background-color: ${language.color};"></span>${language.name} ${language.percentage}%`;
+    legend.appendChild(legendItem);
+});
+
+</script>
+</html>

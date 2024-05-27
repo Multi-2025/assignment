@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="stylesheets/user/anime.css">
   <link rel="stylesheet" href="stylesheets/user/skill.css">
   <link rel="stylesheet" href="stylesheets/user/contract.css">
+  <link rel="stylesheet" href="stylesheets/user/language.css">
 </head>
 
 <body>
@@ -51,7 +52,7 @@
     <!-- begin section -->
     <div class="section aboutme" data-anchor="aboutme">
       <div class="opaque-bg animated fadeInDown">
-        <h1 style="color:white; font-size: 36px">Wang JUNBO<span style="color:#FF6363">/</span>50087530</h1>
+        <h1 style="color:white; font-size: 36px">WANG JUNBO<span style="color:#FF6363">/</span>50087530</h1>
         <p><span id="holder"></span><span class="blinking-cursor">|</span></p>
       </div>
       <i id="moveDown" class="fa fa-chevron-down fa-3x bounce"></i>
@@ -62,17 +63,17 @@
 
     <div class="section" data-anchor="skills">
       <div class="content-skill">
-        <h1 class="wow fadeInDown" data-wow-delay="0.2s">ABOUT ME</h1>
+        <h1 class="wow fadeInDown" data-wow-delay="0.2s" style="margin-bottom:10px; margin-top: 50px;">ABOUT ME</h1>
         <div class="col-md-6">
+          <h2 class="wow fadeInDown" data-wow-delay="0.2s" style="color: #06A2CB">INTRODUCTION</h2>
         <p class="wow fadeInDown" data-wow-delay="0.2s">
-          Hi, I'm Frasho, aka FRADAR!
-          I am a game developer and web designer.
-          I like reading and writing blogs and stories,
-          and I really love coding!
-          I have made many games over the years,
-          such as a racing game called TurboBoost and a geometry-dash inspired game.
-          I'm a big fan of multiplayer games and I have even made 3 .io games!
-          I have also made many chrome extensions and bookmarklets like dark mode,WebEdit and WikiSearch.
+          Hello! My name is Wang Junbo, a Business Management Information Systems (BMIS) student.
+        </p>
+        <p class="wow fadeInDown" data-wow-delay="0.2s">
+          I am passionate about landscape photography, travel, cycling, and chess.
+          I also have an interest in history and international politics, and I enjoy playing games like Minecraft.
+          As a fan of Formula 1, I am fascinated by how data analytics and information systems can enhance the sport.
+          I look forward to applying my skills and diverse interests to innovative projects in the future.
         </p>
         </div>
         <div class="col-md-6">
@@ -81,23 +82,36 @@
         <div class="col-md-12" style="margin-top: 40px">
           <h2 class="wow fadeInDown" data-wow-delay="0.2s" style="color: #06A2CB">CODE SKILLS</h2>
         <div class=" wow fadeInUp container-skillbar" data-wow-delay="0.2s">
-          <div class="skillbar clearfix " data-percent="90%">
-            <div class="skillbar-title" style="background: #DD1E2F;"><span>HTML5</span></div>
-            <div class="skillbar-bar" style="background: #DD1E2F;"></div>
-            <div class="skill-bar-percent">90%</div>
+          <div class="skillbar clearfix " data-percent="60%">
+            <div class="skillbar-title" style="background: #4b8bbe;"><span>Python</span></div>
+            <div class="skillbar-bar" style="background: #4b8bbe;"></div>
+            <div class="skill-bar-percent">60%</div>
           </div> <!-- End Skill Bar -->
 
-          <div class="skillbar clearfix " data-percent="80%">
-            <div class="skillbar-title" style="background: #EBB035;"><span>CSS3</span></div>
-            <div class="skillbar-bar" style="background: #EBB035;"></div>
-            <div class="skill-bar-percent">80%</div>
+          <div class="skillbar clearfix " data-percent="45%">
+            <div class="skillbar-title" style="background: #e34c26;"><span>HTML</span></div>
+            <div class="skillbar-bar" style="background: #e34c26;"></div>
+            <div class="skill-bar-percent">45%</div>
           </div> <!-- End Skill Bar -->
 
-          <div class="skillbar clearfix " data-percent="75%">
-            <div class="skillbar-title" style="background: #218559;"><span>Javascript</span></div>
-            <div class="skillbar-bar" style="background: #218559;"></div>
-            <div class="skill-bar-percent">75%</div>
+          <div class="skillbar clearfix " data-percent="40%">
+            <div class="skillbar-title" style="background: #264de4;"><span>CSS</span></div>
+            <div class="skillbar-bar" style="background: #264de4;"></div>
+            <div class="skill-bar-percent">40%</div>
           </div> <!-- End Skill Bar -->
+
+          <div class="skillbar clearfix " data-percent="35%">
+            <div class="skillbar-title" style="background: #ffcd56;"><span>Javascript</span></div>
+            <div class="skillbar-bar" style="background: #ffcd56;"></div>
+            <div class="skill-bar-percent">35%</div>
+          </div> <!-- End Skill Bar -->
+
+          <div class="skillbar clearfix " data-percent="15%">
+            <div class="skillbar-title" style="background: #42b883;"><span>Vue</span></div>
+            <div class="skillbar-bar" style="background: #42b883;"></div>
+            <div class="skill-bar-percent">35%</div>
+          </div> <!-- End Skill Bar -->
+
         </div>
         </div>
       </div>
@@ -109,17 +123,39 @@
     <div class="section" data-anchor="projects">
       <div class="content-slide">
         <div class="slide">
-          <h1 class="wow fadeInDown" data-wow-delay="0.2s"><a href="https://codepen.io/FRADAR/pen/zYNVjGo">IMessenger</a></h1>
-          <p class="wow fadeInDown" data-wow-delay="0.2s">Messaging Service</p>
-
+          <h1 class="wow fadeInDown" data-wow-delay="0.2s">
+            <a href="https://codepen.io/FRADAR/pen/zYNVjGo">Historical Shadow Scroll(史影绘卷)</a></h1>
+          <p class="wow fadeInDown" data-wow-delay="0.2s">
+            A project using Stable Diffusion-generated images to create historical pictures</p>
+          <div class="col-md-12">
+            <div class="chart-container wow fadeInDown" id="chart-container-1" data-wow-delay="0.2s">
+              <h2 style="text-align: left; margin-bottom: 10px;">Languages</h2>
+              <div class="legend"></div>
+              <div class="chart"></div>
+            </div>
+          </div>
         </div>
         <div class="slide">
-          <h1><a href="https://codepen.io/collection/ANeVpj">Games</a></h1>
-          <p>I have made many interesting games over the years.</p>
+          <h1><a href="https://codepen.io/collection/ANeVpj">AbdOfficeHour</a></h1>
+          <p>Office Hour Reservation System Development</p>
+          <div class="col-md-12">
+            <div class="chart-container" id="chart-container-2">
+              <h2 style="text-align: left; margin-bottom: 10px;">Languages</h2>
+              <div class="legend"></div>
+              <div class="chart"></div>
+            </div>
+          </div>
         </div>
         <div class="slide">
-          <h1><a href="https://codepen.io/FRADAR/full/bGgpyEP">My other Portfolio</a></h1>
-          <p>My mockup portfolio</p>
+          <h1><a href="https://codepen.io/FRADAR/full/bGgpyEP">ABD_Dictionary</a></h1>
+          <p>Software engineering course project</p>
+          <div class="col-md-12">
+            <div class="chart-container" id="chart-container-3">
+              <h2 style="text-align: left; margin-bottom: 10px;">Languages</h2>
+              <div class="legend"></div>
+              <div class="chart"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -224,6 +260,7 @@
 <script src="javascripts/user/smooth.js"></script>
 <script src="javascripts/user/typing.js"></script>
 <script src="javascripts/user/game.js"></script>
+<script src="javascripts/user/language.js"></script>
 
 </body>
 </html>
