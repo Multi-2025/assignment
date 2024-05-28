@@ -1,7 +1,6 @@
 @charset "utf-8";
 
-/******* Fonts Import Start **********/
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 /********* Fonts Face CSS End **********/
 
 /******* Common Element CSS Start ******/
@@ -11,53 +10,20 @@
 }
 .game-section img {
   max-width: 100%;
-  border: 0px;
 }
 .game-section ul, ol {
   list-style: none;
 }
 
-.game-section h2 {
-  margin-bottom: 48px;
-  padding-bottom: 16px;
-  font-size: 20px;
-  line-height: 28px;
-  font-weight: 700;
-  position: relative;
-  text-transform: capitalize;
-}
 .game-section h3 {
   margin: 0 0 10px;
   font-size: 28px;
-  line-height: 36px;
+  line-height: 24px;
 }
 .game-section button {
   outline: none !important;
 }
 /******* Common Element CSS End *********/
-
-/* -------- title style ------- */
-.line-title {
-  position: relative;
-  width: 400px;
-}
-.line-title::before,
-.line-title::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 4px;
-  border-radius: 2px;
-}
-.line-title::before {
-  width: 100%;
-  background: #f2f2f2;
-}
-.line-title::after {
-  width: 32px;
-  background: #e73700;
-}
 
 /******* Middle section CSS Start ******/
 /* -------- Landing page ------- */
@@ -77,7 +43,7 @@
   display: -webkit-flex;
   align-items: flex-end;
   -webkit-align-items: flex-end;
-  background: #343434 no-repeat center center / cover;
+  background: rgba(52, 52, 52, 0) no-repeat center center / cover;
   border-radius: 16px;
   overflow: hidden;
   position: relative;
@@ -98,7 +64,6 @@
   width: 100%;
   left: 0;
   top: 0;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 }
 .game-section .item-desc {
   padding: 0 24px 12px;
@@ -107,24 +72,21 @@
   z-index: 1;
   overflow: hidden;
   transform: translateY(calc(100% - 54px));
-  -webkit-transform: translateY(calc(100% - 54px));
   transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
 }
 .game-section .item.active .item-desc {
   transform: none;
-  -webkit-transform: none;
+
 }
 .game-section .item-desc p {
   opacity: 0;
-  -webkit-transform: translateY(32px);
   transform: translateY(32px);
   transition: all 0.4s ease-in-out 0.2s;
   -webkit-transition: all 0.4s ease-in-out 0.2s;
 }
 .game-section .item.active .item-desc p {
   opacity: 1;
-  -webkit-transform: translateY(0);
   transform: translateY(0);
 }
 .game-section .owl-theme.custom-carousel .owl-dots {
@@ -137,13 +99,10 @@
 /***** responsive css Start ******/
 
 @media (min-width: 992px) and (max-width: 1199px) {
-  .game-section h2 {
-    margin-bottom: 32px;
-  }
   .game-section h3 {
     margin: 0 0 8px;
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 18px;
+    line-height: 24px;
   }
 
   /* -------- Landing page ------- */
@@ -160,18 +119,14 @@
   }
   .game-section .item-desc {
     transform: translateY(calc(100% - 46px));
-    -webkit-transform: translateY(calc(100% - 46px));
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  .game-section h2 {
-    margin-bottom: 32px;
-  }
   .game-section h3 {
     margin: 0 0 8px;
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 18px;
+    line-height: 24px;
   }
   .line-title {
     width: 330px;
@@ -191,17 +146,13 @@
   }
   .game-section .item-desc {
     transform: translateY(calc(100% - 42px));
-    -webkit-transform: translateY(calc(100% - 42px));
   }
 }
 
 @media (max-width: 767px) {
-  .game-section h2 {
-    margin-bottom: 20px;
-  }
   .game-section h3 {
     margin: 0 0 8px;
-    font-size: 19px;
+    font-size: 18px;
     line-height: 24px;
   }
   .line-title {
@@ -225,6 +176,5 @@
   .game-section .item-desc {
     padding: 0 14px 5px;
     transform: translateY(calc(100% - 42px));
-    -webkit-transform: translateY(calc(100% - 42px));
   }
 }

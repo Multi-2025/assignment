@@ -1,5 +1,5 @@
 body {
-  background: radial-gradient(rgba(68, 68, 68, 0.44), rgba(137, 230, 234, 0.79));
+  background: radial-gradient(rgba(120, 120, 120, 0.38), rgba(137, 230, 234, 0.79));
   font-family: "Comfortaa", sans-serif;
 }
 
@@ -87,7 +87,7 @@ svg {
   border-radius: 4px;
   padding: 5px;
   max-width: 500px;
-  font-size: 12px;
+  font-size: 18px;
   line-height: 1.2;
 }
 .option-wrapper .option {
@@ -96,11 +96,11 @@ svg {
   width: 50%;
   border-radius: 4px;
   cursor: pointer;
-  color: #fff;
+  color: #4389ce;
 }
 .option-wrapper .option.active {
-  background: #fff;
-  color: #333;
+  background: rgba(255, 255, 255, 0.25);
+  color: rgb(215, 0, 0);
   pointer-events: none;
 }
 

@@ -259,10 +259,7 @@ var questions = [{
       weight: 3
     }]
   }
-}, ];
-
-  /*
-  {
+}, {
   text: '2. Which team has won the most Constructors\' Championships?', // 哪个车队赢得了最多的车队冠军？
   answers: {
     type: 'multiple', // 多选
@@ -426,4 +423,3 @@ var questions = [{
   }
 }];
 
-   */
