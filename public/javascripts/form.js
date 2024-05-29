@@ -8,6 +8,7 @@ var $countdownTimer = $('.quiz .question .countdown-timer'); // 倒计时选择�
 var $leaderboard = $('.quiz .leaderboard'); // 排行榜选择器
 var $startScreen = $('.quiz .start-screen'); // 开始屏幕选择器
 
+var questions = [];
 var currentQuestion = 0; // default starting value // 默认起始值
 var totalScore = 0; // 用户总分数
 var timer; // 计时器变量
@@ -24,19 +25,29 @@ function quizInit() {
   showStartScreen(); // 显示开始屏幕
 
   // 连接到Socket.IO
-  socket.on('connect', function() {
+  socket.on('connect', function () {
     console.log('Connected to server');
   });
 
   // 接收实时消息
-  socket.on('message', function(data) {
+  socket.on('message', function (data) {
     console.log('Message from server:', data);
   });
 
   // 接收排行榜数据
-  socket.on('leaderboard', function(data) {
+  socket.on('leaderboard', function (data) {
     showLeaderboard(data);
   });
+
+// Fetch questions from the server
+  fetch('/questions')
+      .then(response => response.json())
+      .then(data => {
+        questions = data;
+        $quizProgress.attr("max", questions.length);
+        $quizProgressDataLimit.html(questions.length);
+      })
+      .catch(error => console.error('Error fetching questions:', error));
 }
 
 // 显示开始屏幕
@@ -213,7 +224,7 @@ function showLeaderboard(data) {
     leaderboardHtml += `
       <li style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ccc;">
         <span class="username" style="flex: 1; font-weight: bold;">${data[i].username}</span>
-        <span class="userId" style="flex: 2; font-weight: bold;">${data[i]._id}</span>
+        <span class="userId" style="flex: 2; font-weight: bold;">${data[i].userId}</span>
         <span class="lastScore" style="flex: 1; color: #666; text-align: right;">${data[i].lastScore}</span>
       </li>
     `;
@@ -230,196 +241,3 @@ $(function() {
   $('.quiz .question').hide(); // 隐藏问题部分
   quizInit();
 });
-
-
-
-
-
-
-
-
-
-
-// 问题 //
-var questions = [{
-  text: '1. How many corners does the Shanghai International Circuit have?', // 上海国际赛车场有多少个弯？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. 20', // C. 20个
-      weight: 2
-    }, {
-      text: 'B. 16', // A. 16个
-      weight: 4
-    }, {
-      text: 'C. 22', // D. 22个
-      weight: 1
-    }, {
-      text: 'D. 18', // B. 18个
-      weight: 3
-    }]
-  }
-}, {
-  text: '2. Which team has won the most Constructors\' Championships?', // 哪个车队赢得了最多的车队冠军？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. Ferrari', // A. 法拉利
-      weight: 4
-    }, {
-      text: 'B. Mercedes', // C. 梅赛德斯
-      weight: 2
-    }, {
-      text: 'C. Red Bull Racing', // D. 红牛车队
-      weight: 1
-    }, {
-      text: 'D. McLaren', // B. 迈凯伦
-      weight: 3
-    }]
-  }
-}, {
-  text: '3. In what year was the first Formula 1 World Championship held?', // 第一次F1世界锦标赛在哪一年举行？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. 1955', // A. 1950年
-      weight: 1
-    }, {
-      text: 'B. 1960', // D. 1960年
-      weight: 1
-    }, {
-      text: 'C. 1948', // B. 1948年
-      weight: 2
-    }, {
-      text: 'D. 1950', // C. 1955年
-      weight: 4
-    }]
-  }
-}, {
-  text: '4. Which circuit is known as the "Temple of Speed"?', // 哪条赛道被称为“速度圣殿”？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. Spa-Francorchamps', // C. 斯帕-弗朗科尔尚赛道
-      weight: 2
-    }, {
-      text: 'B. Monza', // A. 蒙扎
-      weight: 4
-    }, {
-      text: 'C. Silverstone', // B. 银石赛道
-      weight: 2
-    }, {
-      text: 'D. Suzuka', // D. 铃鹿赛道
-      weight: 1
-    }]
-  }
-}, {
-  text: '5. Who was the youngest driver to win a Formula 1 race?', // 谁是最年轻的F1比赛冠军车手？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. Sebastian Vettel', // B. 塞巴斯蒂安·维特尔
-      weight: 3
-    }, {
-      text: 'B. Max Verstappen', // A. 马克斯·维斯塔潘
-      weight: 4
-    }, {
-      text: 'C. Lewis Hamilton', // D. 刘易斯·汉密尔顿
-      weight: 1
-    }, {
-      text: 'D. Fernando Alonso', // C. 费尔南多·阿隆索
-      weight: 2
-    }]
-  }
-}, {
-  text: '6. Which driver tragically lost their life during the 1994 San Marino Grand Prix?', // 哪位车手在1994年圣马力诺大奖赛中不幸丧生？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. Ayrton Senna', // A. 艾尔顿·塞纳
-      weight: 4
-    }, {
-      text: 'B. Jochen Rindt', // D. 乔亨·林特
-      weight: 1
-    }, {
-      text: 'C. Gilles Villeneuve', // C. 吉尔·维伦纽夫
-      weight: 2
-    }, {
-      text: 'D. Roland Ratzenberger', // B. 罗兰德·拉岑伯格
-      weight: 3
-    }]
-  }
-}, {
-  text: '7. Which tyre manufacturer is the current supplier for Formula 1?', // 目前F1的轮胎供应商是哪家？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. Pirelli', // A. 倍耐力
-      weight: 4
-    }, {
-      text: 'B. Goodyear', // D. 固特异
-      weight: 1
-    }, {
-      text: 'C. Michelin', // B. 米其林
-      weight: 2
-    }, {
-      text: 'D. Bridgestone', // C. 普利司通
-      weight: 1
-    }]
-  }
-}, {
-  text: '8. Which driver won the 2021 Formula 1 World Championship?', // 哪位车手赢得了2021年F1世界锦标赛？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. Sergio Perez', // D. 塞尔吉奥·佩雷兹
-      weight: 1
-    }, {
-      text: 'B. Max Verstappen', // A. 马克斯·维斯塔潘
-      weight: 4
-    }, {
-      text: 'C. Lewis Hamilton', // B. 刘易斯·汉密尔顿
-      weight: 3
-    }, {
-      text: 'D. Valtteri Bottas', // C. 瓦尔特利·博塔斯
-      weight: 2
-    }]
-  }
-}, {
-  text: '9. What is the maximum number of points a driver can earn in a single Grand Prix weekend (as of 2023)?', // 在2023年，车手在单个大奖赛周末最多可以获得多少积分？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. 24 points', // A. 26分
-      weight: 2
-    }, {
-      text: 'B. 28 points', // D. 28分
-      weight: 1
-    }, {
-      text: 'C. 25 points', // B. 25分
-      weight: 3
-    }, {
-      text: 'D. 26 points', // C. 24分
-      weight: 4
-    }]
-  }
-}, {
-  text: '10. Which driver is known as "The Professor" in Formula 1?', // 哪位车手在F1中被称为“教授”？
-  answers: {
-    type: 'multiple', // 多选
-    options: [{
-      text: 'A. Alain Prost', // A. 阿兰·普罗斯特
-      weight: 4
-    }, {
-      text: 'B. Niki Lauda', // B. 尼基·劳达
-      weight: 2
-    }, {
-      text: 'C. Nelson Piquet', // D. 内尔森·皮奎特
-      weight: 1
-    }, {
-      text: 'D. Jackie Stewart', // C. 杰基·斯图尔特
-      weight: 2
-    }]
-  }
-}];
-

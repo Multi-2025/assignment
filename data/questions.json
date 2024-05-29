@@ -1,0 +1,122 @@
+[
+  {
+    "text": "1. How many corners does the Shanghai International Circuit have?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. 20", "weight": 2 },
+        { "text": "B. 16", "weight": 4 },
+        { "text": "C. 22", "weight": 1 },
+        { "text": "D. 18", "weight": 3 }
+      ]
+    }
+  },
+  {
+    "text": "2. Which team has won the most Constructors' Championships?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. Ferrari", "weight": 4 },
+        { "text": "B. Mercedes", "weight": 2 },
+        { "text": "C. Red Bull Racing", "weight": 1 },
+        { "text": "D. McLaren", "weight": 3 }
+      ]
+    }
+  },
+  {
+    "text": "3. In what year was the first Formula 1 World Championship held?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. 1955", "weight": 1 },
+        { "text": "B. 1960", "weight": 1 },
+        { "text": "C. 1948", "weight": 2 },
+        { "text": "D. 1950", "weight": 4 }
+      ]
+    }
+  },
+  {
+    "text": "4. Which circuit is known as the 'Temple of Speed'?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. Spa-Francorchamps", "weight": 2 },
+        { "text": "B. Monza", "weight": 4 },
+        { "text": "C. Silverstone", "weight": 2 },
+        { "text": "D. Suzuka", "weight": 1 }
+      ]
+    }
+  },
+  {
+    "text": "5. Who was the youngest driver to win a Formula 1 race?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. Sebastian Vettel", "weight": 3 },
+        { "text": "B. Max Verstappen", "weight": 4 },
+        { "text": "C. Lewis Hamilton", "weight": 1 },
+        { "text": "D. Fernando Alonso", "weight": 2 }
+      ]
+    }
+  },
+  {
+    "text": "6. Which driver tragically lost their life during the 1994 San Marino Grand Prix?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. Ayrton Senna", "weight": 4 },
+        { "text": "B. Jochen Rindt", "weight": 1 },
+        { "text": "C. Gilles Villeneuve", "weight": 2 },
+        { "text": "D. Roland Ratzenberger", "weight": 3 }
+      ]
+    }
+  },
+  {
+    "text": "7. Which tyre manufacturer is the current supplier for Formula 1?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. Pirelli", "weight": 4 },
+        { "text": "B. Goodyear", "weight": 1 },
+        { "text": "C. Michelin", "weight": 2 },
+        { "text": "D. Bridgestone", "weight": 1 }
+      ]
+    }
+  },
+  {
+    "text": "8. Which driver won the 2021 Formula 1 World Championship?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. Sergio Perez", "weight": 1 },
+        { "text": "B. Max Verstappen", "weight": 4 },
+        { "text": "C. Lewis Hamilton", "weight": 3 },
+        { "text": "D. Valtteri Bottas", "weight": 2 }
+      ]
+    }
+  },
+  {
+    "text": "9. What is the maximum number of points a driver can earn in a single Grand Prix weekend (as of 2023)?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. 24 points", "weight": 2 },
+        { "text": "B. 28 points", "weight": 1 },
+        { "text": "C. 25 points", "weight": 3 },
+        { "text": "D. 26 points", "weight": 4 }
+      ]
+    }
+  },
+  {
+    "text": "10. Which driver is known as 'The Professor' in Formula 1?",
+    "answers": {
+      "type": "multiple",
+      "options": [
+        { "text": "A. Alain Prost", "weight": 4 },
+        { "text": "B. Niki Lauda", "weight": 2 },
+        { "text": "C. Nelson Piquet", "weight": 1 },
+        { "text": "D. Jackie Stewart", "weight": 2 }
+      ]
+    }
+  }
+]

@@ -5,25 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var http = require('http');
 var socketIo = require('socket.io');
-var mongoose = require('mongoose');
+var fs = require('fs-extra');
 
 var indexRouter = require('./routes/index');
 var formRouter = require('./routes/form');
 var usersRouter = require('./routes/users');
 var testRouter = require('./routes/test');
-const test = require("node:test");
-
-// MongoDB connection
-mongoose.connect("mongodb+srv://cr9294wjb:ufJ8ZItbzIaWPUyk@cluster0.ludq9fi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch((err) => {
-  console.error('Error connecting to MongoDB', err);
-});
-
-
 
 var app = express();
 var server = http.createServer(app);
@@ -42,60 +29,94 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/form', formRouter);
 app.use('/users', usersRouter);
-app.use('/test', testRouter)
+app.use('/test', testRouter);
 
+// File path for storing data locally
+const dataFilePath = path.join(__dirname, 'data', 'answers.json');
 
+// Ensure data directory exists
+fs.ensureDirSync(path.dirname(dataFilePath));
 
-
-// Socket.IO
-var Answer = require('./routes/Answer');
-const {log} = require("debug"); // 引入答案数据模型
-io.on('connection', (socket) => {
-  console.log('a user connected'); // 打印用户连接信息
-
-  socket.on('answer', async (data) => { // 监听客户端发送的答案事件
-    console.log('Answer received:', data); // 打印接收到的答案数据
-
-    // 将答案保存到 MongoDB
-    const answer = new Answer(data);
-    try {
-      await answer.save();
-      console.log('Answer saved to MongoDB'); // 打印保存成功信息
-    } catch (err) {
-      console.error('Error saving answer to MongoDB', err); // 打印保存失败错误信息
-    }
-    // 将答案发送回客户端
-    socket.emit('answer', data);
-    console.log('Answer sent to client:', data); // 打印发送的答案数据
-  });
-
-socket.on('requestLeaderboard', async () => { // 监听客户端请求排行榜事件
+// Function to read data from JSON file
+async function readData() {
   try {
-    const leaderboard = await Answer.aggregate([
-      {
-        $group: {
-          _id: "$userId", // 按 userId 分组
-          username: { $last: "$username" }, // Get the last username in each group
-          lastScore: { $last: "$score" } // 获取每个分组中最后一个文档的 score 字段值
-        }
-      },
-      { $sort: { lastScore: -1 } }, // 按最后一个分数降序排序
-      { $limit: 10 } // 限制返回结果数量为 10
-    ]);
-    socket.emit('leaderboard', leaderboard); // 将排行榜数据发送回客户端
-    console.log(leaderboard)  // 打印排行榜数据
+    return await fs.readJson(dataFilePath);
   } catch (err) {
-    console.error('Error fetching leaderboard', err); // 打印获取排行榜数据失败错误信息
+    if (err.code === 'ENOENT') {
+      // File does not exist, return empty array
+      return [];
+    } else {
+      throw err;
+    }
   }
+}
+
+// Function to write data to JSON file
+async function writeData(data) {
+  await fs.writeJson(dataFilePath, data);
+}
+
+// Serve questions.json to the client
+var questionsFilePath = path.join(__dirname, 'data', 'questions.json');
+
+app.get('/questions', (req, res) => {
+  fs.readJson(questionsFilePath)
+    .then(questions => {
+      res.json(questions);
+    })
+    .catch(err => {
+      console.error('Error reading questions file:', err);
+      res.status(500).json({ error: 'Failed to load questions' });
+    });
 });
 
-  socket.on('disconnect', () => { // 监听用户断开连接事件
-    console.log('user disconnected'); // 打印用户断开连接信息
+// Socket.IO
+io.on('connection', (socket) => {
+  console.log('a user connected'); // Print user connection info
+
+  socket.on('answer', async (data) => { // Listen for 'answer' event from client
+    console.log('Answer received:', data); // Print received answer data
+
+    // Save answer to local JSON file
+    try {
+      const answers = await readData();
+      answers.push(data);
+      await writeData(answers);
+      console.log('Answer saved locally'); // Print save success info
+    } catch (err) {
+      console.error('Error saving answer locally', err); // Print save error info
+    }
+
+    // Send answer back to client
+    socket.emit('answer', data);
+    console.log('Answer sent to client:', data); // Print sent answer data
+  });
+
+  socket.on('requestLeaderboard', async () => { // Listen for 'requestLeaderboard' event from client
+    try {
+      const answers = await readData();
+      const leaderboard = answers.reduce((acc, answer) => {
+        const existing = acc.find(item => item.userId === answer.userid);
+        if (existing) {
+          existing.lastScore = answer.score;
+        } else {
+          acc.push({ userId: answer.userId, username: answer.username, lastScore: answer.score });
+        }
+        return acc;
+      }, []).sort((a, b) => b.lastScore - a.lastScore).slice(0, 10);
+
+      socket.emit('leaderboard', leaderboard); // Send leaderboard data back to client
+      console.log(leaderboard); // Print leaderboard data
+    } catch (err) {
+      console.error('Error fetching leaderboard', err); // Print fetch error info
+    }
+  });
+
+  socket.on('disconnect', () => { // Listen for user disconnect event
+    console.log('user disconnected'); // Print user disconnect info
   });
 });
 // Socket.IO
-
-
 
 console.log("http://localhost:3000");
 console.log(" ");
@@ -106,7 +127,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
