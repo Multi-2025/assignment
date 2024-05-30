@@ -3,8 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var http = require('http');
-var socketIo = require('socket.io');
 var fs = require('fs-extra');
 
 var indexRouter = require('./routes/index');
@@ -13,8 +11,6 @@ var usersRouter = require('./routes/users');
 var testRouter = require('./routes/test');
 
 var app = express();
-var server = http.createServer(app);
-var io = socketIo(server);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,6 +27,8 @@ app.use('/form', formRouter);
 app.use('/users', usersRouter);
 app.use('/test', testRouter);
 
+
+console.log('http://localhost:3000');
 // File path for storing data locally
 const dataFilePath = path.join(__dirname, 'data', 'answers.json');
 
@@ -70,29 +68,34 @@ app.get('/questions', (req, res) => {
     });
 });
 
-// Socket.IO
-io.on('connection', (socket) => {
-  console.log('a user connected'); // Print user connection info
 
-  socket.on('answer', async (data) => { // Listen for 'answer' event from client
-    console.log('Answer received:', data); // Print received answer data
+// Socket.IO setup
+var http = require('http');
+var server = http.createServer(app);
+var socketIo = require('socket.io');
+var io = socketIo(server);
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('answer', async (data) => {
+    console.log('Answer received:', data);
 
     // Save answer to local JSON file
     try {
       const answers = await readData();
       answers.push(data);
       await writeData(answers);
-      console.log('Answer saved locally'); // Print save success info
+      console.log('Answer saved locally');
     } catch (err) {
-      console.error('Error saving answer locally', err); // Print save error info
+      console.error('Error saving answer locally', err);
     }
 
-    // Send answer back to client
     socket.emit('answer', data);
-    console.log('Answer sent to client:', data); // Print sent answer data
+    console.log('Answer sent to client:', data);
   });
 
-  socket.on('requestLeaderboard', async () => { // Listen for 'requestLeaderboard' event from client
+  socket.on('requestLeaderboard', async () => {
     try {
       const answers = await readData();
       const leaderboard = answers.reduce((acc, answer) => {
@@ -105,24 +108,22 @@ io.on('connection', (socket) => {
         return acc;
       }, []).sort((a, b) => b.lastScore - a.lastScore).slice(0, 10);
 
-      socket.emit('leaderboard', leaderboard); // Send leaderboard data back to client
-      console.log(leaderboard); // Print leaderboard data
+      socket.emit('leaderboard', leaderboard);
+      console.log(leaderboard);
     } catch (err) {
-      console.error('Error fetching leaderboard', err); // Print fetch error info
+      console.error('Error fetching leaderboard', err);
     }
   });
 
-  socket.on('disconnect', () => { // Listen for user disconnect event
-    console.log('user disconnected'); // Print user disconnect info
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
   });
 });
 // Socket.IO
 
-console.log("http://localhost:3000");
-console.log(" ");
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.error(`404 error: ${req.originalUrl} not found`);
   next(createError(404));
 });
 
