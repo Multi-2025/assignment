@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var favicon = require('serve-favicon');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -27,6 +28,8 @@ app.use('/form', formRouter);
 app.use('/users', usersRouter);
 app.use('/test', testRouter);
 
+
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 console.log('http://localhost:3000');
 // File path for storing data locally
@@ -95,25 +98,31 @@ io.on('connection', (socket) => {
     console.log('Answer sent to client:', data);
   });
 
-  socket.on('requestLeaderboard', async () => {
-    try {
-      const answers = await readData();
-      const leaderboard = answers.reduce((acc, answer) => {
-        const existing = acc.find(item => item.userId === answer.userid);
-        if (existing) {
-          existing.lastScore = answer.score;
-        } else {
-          acc.push({ userId: answer.userId, username: answer.username, lastScore: answer.score });
-        }
-        return acc;
-      }, []).sort((a, b) => b.lastScore - a.lastScore).slice(0, 10);
+socket.on('requestLeaderboard', async () => {
+  try {
+    const answers = await readData();
 
-      socket.emit('leaderboard', leaderboard);
-      console.log(leaderboard);
-    } catch (err) {
-      console.error('Error fetching leaderboard', err);
-    }
-  });
+    // 创建一个 Map 以存储每个用户的最后一次数据
+    const userLastScores = new Map();
+
+    // 遍历所有答案，将每个用户的最后一次得分保存到 userLastScores 中
+    answers.forEach(answer => {
+      const { userId, username, score } = answer;
+      userLastScores.set(userId, { userId, username, lastScore: score });
+    });
+
+    // 从 Map 中获取用户的最后一次数据，然后转换为数组
+    const leaderboard = [...userLastScores.values()]
+      .sort((a, b) => b.lastScore - a.lastScore)
+      .slice(0, 10);
+
+    socket.emit('leaderboard', leaderboard);
+    console.log(leaderboard);
+  } catch (err) {
+    console.error('Error fetching leaderboard', err);
+  }
+});
+
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
